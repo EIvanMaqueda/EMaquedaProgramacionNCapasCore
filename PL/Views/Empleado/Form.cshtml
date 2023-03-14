@@ -1,0 +1,289 @@
+﻿@model ML.Empleado
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-11 col-md-12">
+            <h2>Empleado</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Form", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                <div class="form-group-lg">
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.IdEmpleado, new { @class = "visually-hidden" })
+                            @Html.TextBoxFor(model => model.IdEmpleado, new { @class = "visually-hidden form-control" })
+                            @Html.ValidationMessageFor(model => model.IdEmpleado)
+
+                        </div>
+                    </div>
+                    <div class="row row-cols-3">
+
+                        @if (Model.NumeroEmpleado==null)
+                        {
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.NumeroEmpleado)
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                                    @Html.TextBoxFor(model => model.NumeroEmpleado, new { @class = "form-control", @id = "txtNumeroEmpleado"})
+                                    @Html.ValidationMessageFor(model => model.NumeroEmpleado)
+                                </div>
+                            </div>
+                        </div> 
+                        }else
+                        {    
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.NumeroEmpleado)
+                                <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+                                        <input class="form-control" type="text" id = "txtNumeroEmpleado" value="@Model.NumeroEmpleado" aria-label="@Model.NumeroEmpleado" disabled >
+                                    @Html.ValidationMessageFor(model => model.NumeroEmpleado)
+                                </div>
+                            </div>
+                        </div>
+                        }
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Nombre)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person-square"></i></span>
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                                    @Html.ValidationMessageFor(model => model.Nombre)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.ApellidoPaterno)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person-fill-check"></i></span>
+                                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno" })
+                                    @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row row-cols-3">
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.ApellidoMaterno)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person-fill-up"></i>  </span>
+                                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno" })
+                                    @Html.ValidationMessageFor(model => model.ApellidoMaterno)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.RFC)
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-person-bounding-box"></i> </span>
+                                    @Html.TextBoxFor(model => model.RFC, new { @class = "form-control", @id = "txtEmail" })
+                                    @Html.ValidationMessageFor(model => model.RFC)
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Telefono)
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-telephone"></i> </span>
+                                    @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @id = "txtTelefono" })
+                                    @Html.ValidationMessageFor(model => model.Telefono)
+                                </div>
+
+                            </div>
+                        </div>
+
+                        
+                    </div>
+
+                    <div class="row row-cols-3">
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Email)
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-envelope-at"></i> </span>
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @id = "txtPassword" })
+                                    @Html.ValidationMessageFor(model => model.Email)
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.FechaNacimiento)
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-calendar-date-fill"></i> </span>
+                                    @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @id = "txtFechaNacimiento"})
+                                    @Html.ValidationMessageFor(model => model.FechaNacimiento)
+                                </div>
+                            </div>
+                        </div>
+
+         
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.NSS)
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-person-badge-fill"></i> </span>
+                                    @Html.TextBoxFor(model => model.NSS, new { @class = "form-control", @id = "txtNumeroTelefono" })
+                                    @Html.ValidationMessageFor(model => model.NSS)
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+                    <div class="row row-cols-3">
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.FechaIngreso)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-calendar-plus-fill"></i> </span>
+                                    @*@Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @id = "txtFechaNacimiento" })
+                                @Html.ValidationMessageFor(model => model.FechaNacimiento)*@
+                                    @Html.TextBoxFor(model => model.FechaIngreso, new { @class = "form-control", @id = "txtFechaIngreso"})
+                                    @Html.ValidationMessageFor(model => model.FechaNacimiento)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Empresa)
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-building-fill"></i> </span>
+                                    @Html.DropDownListFor(model => model.Empresa.IdEmpresa, new SelectList(Model.Empresa.Empresas, "IdEmpresa", "Nombre"), "Selecciona la empresa del usuario", new { @class = "form-control", @id = "ddlEmpresa" } )
+                                    @Html.ValidationMessageFor(model => model.Empresa.IdEmpresa)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="col">
+                                <br>
+                                
+                                    <input id="fuImage" type='file' class="form-control" name="fuImage" onchange="validateFile(this), readURL(this);  " />
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col">
+                                @if (Model.Foto != null)
+                                {
+                                    <br />
+                                    <img id="Img" src="data:image/*;base64,@Model.Foto" style="width:50px ; height:50px" />
+
+                                }
+                                else
+                                {
+                                    <br />
+                                    <img id="Img" src="~/Imagenes/Default.png" style="width:50px ; height:50px" />
+                                }
+                            </div>
+                        </div>
+                        @Html.HiddenFor(Model=>Model.Foto)
+
+
+                        
+                    </div>
+
+                    
+
+                    <br />
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <br />
+                            <div class="input-group">
+                                <button type="submit" value="Guardar" class="btn btn-success"> <i class="fa-solid fa-floppy-disk fa-beat"></i>  Guardar </button>
+                                @*<input type="submit" value="Guardar" class="btn btn-success" />*@
+                                @Html.ActionLink("Regresar", "GetAll", "Usuario", htmlAttributes: new { @class = "btn btn-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    @Html.HiddenFor(Model=>Model.NumeroEmpleado)
+                </div>
+
+            }
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script type="text/javascript">
+
+        function validateFile() {//funcion para validar el formato de la imagen
+        var allowedExtension = ['jpeg', 'jpg', 'png'];//formatos validos admitidos
+        var fileExtension = document.getElementById('fuImage').value.split('.').pop().toLowerCase();//obtiene la extencion y la convierte en minusculas
+        var isValidFile = false;//crecaion de la varable que nos indica si el formato es o no valido
+        for (var index in allowedExtension) {
+            if (fileExtension === allowedExtension[index]) {//copara el valor obtenido de la imgen con los formatos permitidos
+                isValidFile = true;//cambia valor de la variable
+                break;
+            }
+        }
+        if (!isValidFile) {//si el formato introducido es incorrecto entra aqui
+            alert('Las extensiones permitidas son : *.' + allowedExtension.join(', *.'));//alerta indicando los formatos permitidos
+            document.getElementById('fuImage').value = ""//vacia el valor del imput para que subo un archivo valido
+        }
+        return isValidFile;//regresa si el archivo es o no permitido
+    }
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#Img').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $(function () {
+            $("#txtFechaNacimiento").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+
+        $(function () {
+            $("#txtFechaIngreso").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+
+</script>
+}
+
+

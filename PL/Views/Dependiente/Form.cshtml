@@ -1,0 +1,221 @@
+﻿@model ML.Dependiente
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-11 col-md-12">
+            <h2>Dependiente de : @Model.Empleado.Nombre @Model.Empleado.ApellidoPaterno @Model.Empleado.ApellidoMaterno</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Form", "Dependiente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                <div class="form-group-lg">
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.IdDependiente, new { @class = "visually-hidden" })
+                            @Html.TextBoxFor(model => model.IdDependiente, new { @class = "visually-hidden form-control" })
+                            @Html.ValidationMessageFor(model => model.IdDependiente)
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.Empleado.IdEmpleado, new { @class = "visually-hidden" })
+                            @Html.TextBoxFor(model => model.Empleado.IdEmpleado, new { @class = "visually-hidden form-control" })
+                            @Html.ValidationMessageFor(model => model.Empleado.IdEmpleado)
+
+                        </div>
+                    </div>
+
+                    <div class="row row-cols-3">
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Nombre)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person-square"></i></span>
+                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                                    @Html.ValidationMessageFor(model => model.Nombre)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.ApellidoPaterno)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person-fill-check"></i></span>
+                                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno" })
+                                    @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.ApellidoMaterno)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person-fill-up"></i>  </span>
+                                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno" })
+                                    @Html.ValidationMessageFor(model => model.ApellidoMaterno)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row row-cols-3">
+
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.FechaNacimiento)
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-calendar-date"></i> </span>
+                                    @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", @id = "txtFechaNacimiento"})
+
+                                </div>
+                                @Html.ValidationMessageFor(model => model.FechaNacimiento)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.EstadoCivil)
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-telephone"></i> </span>
+                                    @Html.TextBoxFor(model => model.EstadoCivil, new { @class = "form-control", @id = "txtEstadoCivil" })
+                                    @Html.ValidationMessageFor(model => model.EstadoCivil)
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Genero)
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-gender-ambiguous"></i> </span>
+                                    <div class="form-check">
+                                        @if (String.Equals(Model.Genero, "H"))
+                                        {
+                                            <label>Hombre</label>
+                                            @Html.RadioButtonFor(model => model.Genero, "H", new { @checked = "true" })
+                                            <label>Mujer</label>
+                                            @Html.RadioButtonFor(model =>model.Genero,"M")
+                                        }
+                                        else
+                                        {
+                                            <label>Hombre</label>
+                                            @Html.RadioButtonFor(model => model.Genero, "H")
+                                            <label>Mujer</label>
+                                            @Html.RadioButtonFor(model =>model.Genero,"M",new { @checked = "true" })
+                                        }
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row row-cols-3">
+
+                    
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Telefono)
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-calendar-date-fill"></i> </span>
+                                    @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @id = "txtTelefono"})
+                                    @Html.ValidationMessageFor(model => model.Telefono)
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col">
+                                @Html.LabelFor(model => model.Rfc)
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-person-badge-fill"></i> </span>
+                                    @Html.TextBoxFor(model => model.Rfc, new { @class = "form-control", @id = "txtRfc" })
+                                    @Html.ValidationMessageFor(model => model.Rfc)
+                                </div>
+                            </div>
+                        </div>
+
+                       
+
+                        <div class="form-group">
+                            <div class="col">
+                            @Html.LabelFor(model => model.DependienteTipo)
+                            <div class="input-group">
+                                    <span class="input-group-text"> <i class="bi bi-building-fill-gear"></i> </span>
+                                    @Html.DropDownListFor(model => model.DependienteTipo.IdDependienteTipo, new SelectList(Model.DependienteTipo.DependientesTipos, "IdDependienteTipo", "Nombre"), "Selecciona dependiente", new { @class = "form-control" })
+                                
+                            </div>
+                                
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+                    @Html.HiddenFor(model=>model.Genero)
+                   
+
+
+
+                    <br />
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <br />
+                            <div class="input-group">
+                                <button type="submit" value="Guardar" class="btn btn-success"> <i class="fa-solid fa-floppy-disk fa-beat"></i>  Guardar </button>
+                                @*<input type="submit" value="Guardar" class="btn btn-success" />*@
+                                <a class="btn btn-danger" href="@Url.Action("DependienteGetByIdEmpleado", "Dependiente", new { IdEmpleado=Model.Empleado.IdEmpleado})">Regresar</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            }
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script type="text/javascript">
+        $(function () {
+            $("#txtFechaNacimiento").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+
+   
+
+
+</script>
+
+}
+

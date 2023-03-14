@@ -1,0 +1,70 @@
+﻿@model ML.Aseguradora
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-11 col-md-12">
+            <h2>Aseguradora</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Form", "Aseguradora", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                    <div class="form-horizontal">
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                            @Html.LabelFor(model => model.IdAseguradora, new { @class = "visually-hidden" })
+                            @Html.TextBoxFor(model => model.IdAseguradora, new { @class = "visually-hidden form-control" })
+                            @Html.ValidationMessageFor(model => model.IdAseguradora)
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                            @Html.LabelFor(model => model.Nombre)
+                                <div class="input-group">
+                                    <span class="input-group-addon">  <i class="fa-solid fa-building"></i> </span>
+                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtUserName" })
+                                @Html.ValidationMessageFor(model => model.Nombre)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-4">
+                            @Html.LabelFor(model => model.Usuario.Usuarios)
+                                <div class="input-group">
+                                    <span class="input-group-addon"> <i class="fa-solid fa-earth-americas"></i> </span>
+                                @Html.DropDownListFor(model => model.Usuario.IdUsuario, new SelectList(Model.Usuario.Usuarios, "IdUsuario", "NombreCompleto"), "Selecciona el usuario", new { @class = "form-control", @id = "ddlUsuario" })
+                                @Html.ValidationMessageFor(model => model.Usuario.Usuarios)
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <br />
+                                <div class="input-group">
+                                    <button type="submit" value="Guardar" class="btn btn-success"> <i class="fa-solid fa-floppy-disk fa-beat"></i>  Guardar </button>
+
+                                @Html.ActionLink("Regresar", "GetAll", "Aseguradora", htmlAttributes: new { @class = "btn btn-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+            }
+        </div>
+    </div>
+
+</div>

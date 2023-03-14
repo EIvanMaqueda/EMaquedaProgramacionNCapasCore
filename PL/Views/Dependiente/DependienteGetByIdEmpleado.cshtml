@@ -1,0 +1,76 @@
+﻿@model ML.Dependiente
+@{
+    ViewData["Title"] = "DependienteGetByIdEmpleado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <h2>Dependientes de : @Model.Empleado.Nombre @Model.Empleado.ApellidoPaterno @Model.Empleado.ApellidoMaterno</h2>
+    </div>
+    <br />
+    <div class="row">
+        <div>
+            @*@Html.ActionLink("Agregar", "Form", "Dependiente", htmlAttributes: new { @class = "btn btn-success" ,@idEmpleado=1})*@
+            <a class="btn btn-success" href="@Url.Action("Form", "dependiente", new { IdEmpleado=Model.Empleado.IdEmpleado})">Agregar</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+<br />
+<div class="row">
+    @if (Model.Dependientes != null)
+    {
+        //tabla
+        <table class="table table-bordered table-responsive table-striped">
+            <thead style="background-color: chartreuse">
+                <tr>
+                    <td class="d-none">IdDependiente</td>
+                    <td class="d-none">IdEmpleado</td>
+                    <td class="text-center" style=" font-weight:bold;">Nombre</td>
+                    <td class="text-center" style=" font-weight:bold;">Fecha de Nacimiento</td>
+                    <td class="text-center" style=" font-weight:bold;">Estado Civil</td>
+                    <td class="text-center" style=" font-weight:bold;">Genero</td>
+                    <td class="text-center" style=" font-weight:bold;">Telefono</td>
+                    <td class="text-center" style=" font-weight:bold;">RFC</td>
+                    <td class="d-none">IdDependienteTipo</td>
+
+                    <td class="text-center" style=" font-weight:bold;">Tipo dependiente</td>
+                    <td class="text-center" style=" font-weight:bold;">Actualiar</td>
+                    <td class="text-center" style=" font-weight:bold;">Eliminar</td>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (ML.Dependiente dependiente in Model.Dependientes)
+                {
+                    <tr>
+                        <td class="d-none">@dependiente.IdDependiente</td>
+                        <td class="d-none">@dependiente.Empleado.IdEmpleado</td>
+                        <td>@dependiente.Nombre @dependiente.ApellidoPaterno @dependiente.ApellidoMaterno</td>
+                        <td>@dependiente.FechaNacimiento</td>
+                        <td>@dependiente.EstadoCivil</td>
+                        <td>@dependiente.Genero</td>
+                        <td>@dependiente.Telefono</td>
+                        <td>@dependiente.Rfc</td>
+                        <td class="d-none">@dependiente.DependienteTipo.IdDependienteTipo</td>
+                        <td>@dependiente.DependienteTipo.Nombre</td>
+                        <td class="text-center"><a class="btn btn-warning" href="@Url.Action("Form", "dependiente", new { IdDependiente=dependiente.IdDependiente, IdEmpleado=dependiente.Empleado.IdEmpleado})"><i class="bi bi-pencil-square"></i></a></td>
+                        <td class="text-center"><a class="btn btn-danger" href="@Url.Action("Delete", "dependiente", new { Iddependiente = dependiente.IdDependiente })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"><i class="bi bi-trash-fill"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    }
+    else
+    {
+        <div class="alert alert-success" role="alert">El empleado no tiene dependientes, presione el boton de agreagar para asiganr un dependiente al empleado  </div>
+    }
+</div>
+

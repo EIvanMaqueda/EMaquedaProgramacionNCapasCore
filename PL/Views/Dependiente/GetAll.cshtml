@@ -1,0 +1,79 @@
+﻿@model ML.Empleado
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <h2>Empleado Dependiente</h2>
+        <br>
+        <h5>
+            En este menu puedes buscar acceder a los dependientes que cada empleado, para hecerlo
+            solo pulsa en el boton "Dependientes" del empleado que desees seleccionar
+        </h5>
+    </div>
+    <br />
+    <div class="row">
+
+        @using (Html.BeginForm("GetAll", "Dependiente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+             <div class="row row-cols-3">
+            <div class="form-group">
+                <div class="col">
+                    
+                    <div class="input-group">
+                        <span class="input-group-text"> <i class="bi bi-building-fill"></i> </span>
+                        @Html.DropDownListFor(model => model.Empresa.IdEmpresa, new SelectList(Model.Empresa.Empresas, "IdEmpresa", "Nombre"), "Selecciona la empresa del usuario", new { @class = "form-control", @id = "ddlEmpresa" } )
+                        @Html.ValidationMessageFor(model => model.Empresa.IdEmpresa)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                 
+                    <div class="col">
+                        @*<center>*@
+                        <button type="submit" value="Buscar" class="btn btn-info"> Buscar </button>
+                       @* </center>*@
+                    </div>
+                    </div>
+                    </div>
+        }
+    </div>
+</div>
+
+<br />
+<div class="row">
+    @if (Model.Empleados != null)
+    {
+        <div class="row row-cols-4">
+                @foreach (ML.Empleado empleado in Model.Empleados)
+                {
+     
+         <div class="col">
+            <div class="card">
+                <div class="card-border-top">
+                </div>
+                <div class="card-img">
+                    <img id="Img" src="data:image/*;base64,@empleado.Foto" style="width:90px ; height:100px" />
+                </div>
+                <span> @empleado.Nombre</span>
+                <p class="card-name"> @empleado.ApellidoPaterno @empleado.ApellidoMaterno</p>
+                        <a class="card-button" href="@Url.Action("DependienteGetByIdEmpleado", "Dependiente", new { IdEmpleado = empleado.IdEmpleado })">Dependientes</a>
+       
+                
+               
+            </div>
+         </div>
+    
+                }
+                     </div>
+
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">Ocurrio un error al realizar la consulta </div>
+    }
+</div>
+

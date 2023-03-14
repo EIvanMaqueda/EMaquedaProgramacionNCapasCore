@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <h2>Empleado</h2>
+        <h5>En este menu puedes agregar, actulaizar y eliminar a los empleados 
+        </h5>
+    </div>
+    <br />
+    <div class="row">
+        <div>
+            @Html.ActionLink("Agregar", "Form", "Empleado", htmlAttributes: new { @class = "btn btn-success" })
+        </div>
+    </div>
+</div>
+
+    <br />
+    <div class="row">
+        @if (Model.Empleados != null)
+        {
+            //tabla
+            <table class="table table-bordered table-responsive table-striped">
+                <thead style="background-color: chartreuse">
+                    <tr>
+                        <td class="d-none">IdEmpleado</td>
+                        <td class="text-center" style=" font-weight:bold;">Foto</td>
+                        <td class="text-center" style=" font-weight:bold;">Nombre del Empleado</td>
+                        <td class="text-center" style=" font-weight:bold;">Numero Empleado</td>
+                        <td class="text-center" style=" font-weight:bold;">RFC</td>
+                        <td class="text-center" style=" font-weight:bold;">Mail</td>
+                        <td class="text-center" style=" font-weight:bold;">Telefono</td>
+                        <td class="text-center" style=" font-weight:bold;">Fecha de Nacimiento</td>
+                        <td class="text-center" style=" font-weight:bold;">NSS</td>
+                        <td class="text-center" style=" font-weight:bold;">Fecha Ingreso</td>
+                        <td class="d-none">IdEmpresa</td>
+                        <td class="text-center" style=" font-weight:bold;">Nombre Empresa</td>
+                        <td class="text-center" style=" font-weight:bold;">Logo</td>
+                        <td class="text-center" style=" font-weight:bold;">Actualiar</td>
+                        <td class="text-center" style=" font-weight:bold;">Eliminar</td>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (ML.Empleado empleado in Model.Empleados)
+                    {
+                        <tr>
+                            <td class="d-none">@empleado.IdEmpleado</td>
+                            @if (empleado.Foto != null)
+                            {
+                                <td><img id="Img" src="data:image/*;base64,@empleado.Foto" style="width:50px ; height:50px" /></td>
+                            }
+                            else
+                            {
+                                <td><img id="Img" src="~/Imagenes/Default.png" style="width:50px ; height:50px" /></td>
+
+                            }
+                            
+                            <td>@empleado.Nombre @empleado.ApellidoPaterno @empleado.ApellidoMaterno</td>
+                            <td>@empleado.NumeroEmpleado</td>
+                            <td>@empleado.RFC</td>
+                            <td>@empleado.Email</td>
+                            <td>@empleado.Telefono</td>
+                            <td>@empleado.FechaNacimiento</td>
+                            <td>@empleado.NSS</td>
+                            <td>@empleado.FechaIngreso</td>
+                            <td class="d-none">@empleado.Empresa.IdEmpresa</td>
+                            <td>@empleado.Empresa.Nombre</td>
+                             <td><img id="Img" src="data:image/*;base64,@empleado.Empresa.Logo" style="width:50px ; height:50px" /></td>
+                            <td class="text-center"><a class="btn btn-warning" href="@Url.Action("Form", "Empleado", new { Idempleado = empleado.IdEmpleado })"><i class="bi bi-pencil-square"></i></a></td>
+                            <td class="text-center"><a class="btn btn-danger" href="@Url.Action("Delete", "Empleado", new { Idempleado = empleado.IdEmpleado })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"><i class="bi bi-trash-fill"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">Ocurrio un error al realizar la consulta </div>
+        }
+   </div>
+

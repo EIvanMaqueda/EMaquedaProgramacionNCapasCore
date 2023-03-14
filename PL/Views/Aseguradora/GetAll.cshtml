@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <h2>Aseguradora</h2>
+        <br>
+        <h5>En este menu puedes agregar, actualizar y eliminar  a las aseguradoras </h5>
+    </div>
+    <br />
+    <div class="row">
+        <div>
+            @Html.ActionLink("Agregar", "Form", "Usuario", htmlAttributes: new { @class = "btn btn-success" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        @if (Model.Aseguradoras != null)
+        {
+            //tabla
+            <table class="table table-bordered table-responsive table-striped">
+                <thead style="background-color: chartreuse">
+                    <tr>
+                        <td class="d-none">IdAseguradora</td>
+                        <td class="text-center" style=" font-weight:bold;">Nombre</td>
+                        <td class="text-center" style=" font-weight:bold;">Fecha Creacion</td>
+                        <td class="text-center" style=" font-weight:bold;">Fecha Modificacion</td>
+                        <td class="d-none">IdUsuario</td>
+                        <td class="text-center" style=" font-weight:bold;">Nombre Usuario</td>
+                        <td class="text-center" style=" font-weight:bold;">Editar</td>
+                        <td class="text-center" style=" font-weight:bold;">Eliminar</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (ML.Aseguradora aseguradora in Model.Aseguradoras)
+                    {
+                        <tr>
+                           
+                            <td class="d-none">@aseguradora.IdAseguradora</td>
+                            <td>@aseguradora.Nombre</td>
+                            <td>@aseguradora.FechaCreacion</td>
+                            <td>@aseguradora.FechaModificacion</td>
+                            <td class="d-none">@aseguradora.Usuario.IdUsuario</td>
+                            <td>@aseguradora.Usuario.Nombre @aseguradora.Usuario.ApellidoPaterno @aseguradora.Usuario.ApellidoMaterno</td>
+                            <td class="text-center"><a class="btn btn-warning" href="@Url.Action("Form", "Aseguradora", new { IdAseguradora = aseguradora.IdAseguradora })"><i class="bi bi-pencil-square"></i></a></td>
+                            <td class="text-center"><a class="btn btn-danger" href="@Url.Action("Delete", "Aseguradora", new { IdAseguradora = aseguradora.IdAseguradora})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"><i class="bi bi-trash-fill"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">Ocurrio un error al realizar la consulta </div>
+        }
+    </div>
+</div>
+
+
