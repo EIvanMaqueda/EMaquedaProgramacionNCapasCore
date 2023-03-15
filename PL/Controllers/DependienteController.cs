@@ -10,6 +10,7 @@ namespace PL.Controllers
             ViewBag.Sesion = HttpContext.Session.GetString("Usuario");
             ML.Empleado empleado = new ML.Empleado();
             ML.Result resultEmpresa = BL.Empresa.EmpresaGetAll();
+            empleado.Empresa = new ML.Empresa();
             ML.Result result = BL.Empleado.GetAll(empleado); //EF
             
             empleado.Empresa = new ML.Empresa();
@@ -33,7 +34,7 @@ namespace PL.Controllers
         {
             ViewBag.Sesion = HttpContext.Session.GetString("Usuario");
             ML.Result resultEmpresa = BL.Empresa.EmpresaGetAll();
-            empleado.IdEmpresa = empleado.Empresa.IdEmpresa;
+            
             ML.Result result = BL.Empleado.GetAll(empleado); //EF
             
             empleado.Empresa = new ML.Empresa();
@@ -91,7 +92,7 @@ namespace PL.Controllers
         [HttpGet]
         public ActionResult Form(int? idDependiente, int idEmpleado)
         {
-            ViewBag.Sesion = HttpContext.Session.GetString("Usuario");
+            
             ML.Result resultdependientetipo = BL.Dependiente.DependienteTipoGetAll();
             ML.Dependiente dependiente=new ML.Dependiente();
             dependiente.DependienteTipo=new ML.DependienteTipo();

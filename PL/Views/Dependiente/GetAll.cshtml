@@ -14,7 +14,7 @@
         </h5>
     </div>
     <br />
-    <div class="row">
+    <div class="container">
 
         @using (Html.BeginForm("GetAll", "Dependiente", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
@@ -25,8 +25,18 @@
                     <div class="input-group">
                         <span class="input-group-text"> <i class="bi bi-building-fill"></i> </span>
                         @Html.DropDownListFor(model => model.Empresa.IdEmpresa, new SelectList(Model.Empresa.Empresas, "IdEmpresa", "Nombre"), "Selecciona la empresa del usuario", new { @class = "form-control", @id = "ddlEmpresa" } )
-                        @Html.ValidationMessageFor(model => model.Empresa.IdEmpresa)
+                        
                     </div>
+                </div>  
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                        <div class="input-group">
+                            <span class="input-group-text"> <i class="bi bi-building-fill"></i> </span>
+                            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre",@placeholder="Nombre" })
+
+                        </div>
                 </div>
             </div>
             
@@ -38,7 +48,7 @@
                        @* </center>*@
                     </div>
                     </div>
-                    </div>
+        </div>
         }
     </div>
 </div>

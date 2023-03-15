@@ -19,7 +19,7 @@ namespace BL
                 {
                     //empleado.Empresa = new ML.Empresa();
                     
-                    var query = context.Empleados.FromSqlRaw($"EmpleadoGetAll {empleado.IdEmpresa}").ToList();
+                    var query = context.Empleados.FromSqlRaw($"EmpleadoGetAll '{empleado.Empresa.Nombre}','{empleado.Nombre}'").ToList();
 
                     if (query != null)
                     {
@@ -37,7 +37,7 @@ namespace BL
                             empleado.RFC = obj.Rfc;
                             empleado.Email = obj.Email;
                             empleado.Telefono = obj.Telefono;
-                           empleado.FechaNacimiento = obj.FechaNacimiento.ToString("dd/MM/yyyy");
+                            empleado.FechaNacimiento = obj.FechaNacimiento.ToString("dd/MM/yyyy");
                             empleado.FechaIngreso = obj.FechaIngreso.ToString("dd/MM/yyyy");
 
                             empleado.Empresa = new ML.Empresa();

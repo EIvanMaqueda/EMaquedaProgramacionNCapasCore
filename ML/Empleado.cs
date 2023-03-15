@@ -22,6 +22,6 @@ namespace ML
         public string Foto { get; set; }
         public ML.Empresa Empresa { get; set; }
         public List<object> Empleados { get; set; }
-        public int IdEmpresa { get; set; }
+        
     }
 }

@@ -1,12 +1,15 @@
 ﻿@model ML.Result
+
 @{
+    
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-  
+
 }
 <h1>Carga masiva de arachivos</h1>
 <h3>Seleccione el tipo de archivo que desee cargar</h3>
 <hr>
+
 
  @using (Html.BeginForm("Index", "CargaMasiva", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {

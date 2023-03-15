@@ -1,27 +1,70 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ML;
 
 namespace PL.Controllers
 {
     public class UsuarioController : Controller
     {
+        //Inyeccion de dependencias-- patron de diseño
+        private readonly IConfiguration _configuration;
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
 
-        [TempData]
-        public string Sesion { get; set; }
+        public UsuarioController(IConfiguration configuration, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
+        {
+            _configuration = configuration;
+            _hostingEnvironment = hostingEnvironment;
+        }
+        //[TempData]
+        // public string Sesion { get; set; }
 
         [HttpGet]
         public ActionResult GetAll()
         {
             ML.Usuario usuario = new ML.Usuario();
-            ML.Result result = BL.Usuario.GetAll(usuario);
-            if (result.Correct)
+            ML.Result result = new ML.Result();
+            result.Objects = new List<object>();
+            try
             {
-                usuario.Usuarios = result.Objects;
-                return View(usuario);
+                using (var client = new HttpClient())
+                {
+                    string urlApi = _configuration["UrlApi"];
+                    client.BaseAddress = new Uri(urlApi);
+
+                    var responseTask = client.GetAsync("Usuario/GetAll");
+                    responseTask.Wait();
+
+                    var resultServicio = responseTask.Result;
+
+                    if (resultServicio.IsSuccessStatusCode)
+                    {
+                        var readTask = resultServicio.Content.ReadAsAsync<ML.Result>();
+                        readTask.Wait();
+
+                        foreach (var resultItem in readTask.Result.Objects)
+                        {
+                            ML.Usuario resultItemList = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Usuario>(resultItem.ToString());
+                            result.Objects.Add(resultItemList);
+                        }
+                    }
+                    usuario.Usuarios = result.Objects;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return View(usuario);
+
+                throw;
             }
+            return View(usuario);
+            //ML.Result result = BL.Usuario.GetAll(usuario);
+            //if (result.Correct)
+            //{
+            //    usuario.Usuarios = result.Objects;
+            //    return View(usuario);
+            //}
+            //else
+            //{
+            //    return View(usuario);
+            //}
         }
 
         [HttpPost]
@@ -106,10 +149,27 @@ namespace PL.Controllers
             //{
                 if (usuario.IdUsuario == 0)
                 {
-                    result = BL.Usuario.Add(usuario);
-                    ViewBag.Message = result.Message;
-                    return View("Modal");
-                }
+                //result = BL.Usuario.Add(usuario);
+                //ViewBag.Message = result.Message;
+                //return View("Modal");
+                 
+                //using (var client = new HttpClient())
+                //{
+                //    client.BaseAddress = new Uri("http://localhost:40840//api/");
+
+                //    //HTTP POST
+                //    var postTask = client.PostAsJsonAsync<ML.SubCategoria>("subcategoria/Add", subcategoria);
+                //    postTask.Wait();
+
+                //    var result = postTask.Result;
+                //    if (result.IsSuccessStatusCode)
+                //    {
+                //        return RedirectToAction("GetAll");
+                //    }
+                //}
+
+                return View("GetAll");
+            }
                 else
                 {
                     result = BL.Usuario.Update(usuario);
@@ -226,7 +286,7 @@ namespace PL.Controllers
                    
                     HttpContext.Session.SetString("Usuario",usuario.Rol.IdRol.ToString());
                     
-                    Sesion = HttpContext.Session.GetString("Usuario");
+                   // Sesion = HttpContext.Session.GetString("Usuario");
 
                     return RedirectToAction("Index", "Home");
                 }

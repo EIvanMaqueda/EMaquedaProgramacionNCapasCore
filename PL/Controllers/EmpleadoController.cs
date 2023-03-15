@@ -7,8 +7,9 @@ namespace PL.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
-            ViewBag.Sesion = HttpContext.Session.GetString("Usuario");
+            
             ML.Empleado empleado = new ML.Empleado();
+            empleado.Empresa = new ML.Empresa();
             ML.Result result = BL.Empleado.GetAll(empleado); //EF
             
             if (result.Correct)
