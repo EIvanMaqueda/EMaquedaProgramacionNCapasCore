@@ -107,7 +107,7 @@ namespace BL
                     if (query >=1)
                     {
                         result.Message = "Empleado actualizado correctamente";
-                        result.Correct = false;
+                        result.Correct = true;
                     }
                 }
             }
@@ -132,7 +132,7 @@ namespace BL
                     if (query >=1)
                     {
                         result.Message = "Empleado elimnido correctamente";
-                        result.Correct=false;
+                        result.Correct=true;
                     }
                 }
             }

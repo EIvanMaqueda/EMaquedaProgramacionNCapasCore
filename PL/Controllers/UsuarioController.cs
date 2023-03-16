@@ -108,7 +108,42 @@ namespace PL.Controllers
             }
             else//actualizar
             {
-                ML.Result result = BL.Usuario.GetById(idUsuario.Value);
+                //ML.Result result = BL.Usuario.GetById(idUsuario.Value);
+                ML.Result result=new ML.Result();
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        string urlApi = _configuration["UrlApi"];
+                        client.BaseAddress = new Uri(urlApi);
+
+                        var responseTask = client.GetAsync("Usuario/GetByid/"+ idUsuario);
+                        responseTask.Wait();
+
+                        var resultServicio = responseTask.Result;
+
+                        if (resultServicio.IsSuccessStatusCode)
+                        {
+                            var readTask = resultServicio.Content.ReadAsAsync<ML.Result>();
+                            readTask.Wait();
+                            ML.Usuario resultItemList = new ML.Usuario();
+                            resultItemList = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Usuario>(readTask.Result.Object.ToString());
+                            result.Object = resultItemList;
+                            result.Correct = true;
+
+                        }
+                        else { 
+                        result.Correct=false;
+                        }
+                        
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    result.Correct = false;
+                    result.Message= ex.Message;
+                }
                 if (result.Correct)
                 {
                     usuario = (ML.Usuario)result.Object;
@@ -144,7 +179,7 @@ namespace PL.Controllers
                 usuario.Imagen = Convert.ToBase64String(imagen);
             }
 
-            ML.Result result = new ML.Result();
+            //ML.Result result = new ML.Result();
            // if (ModelState.IsValid == true)
             //{
                 if (usuario.IdUsuario == 0)
@@ -152,30 +187,56 @@ namespace PL.Controllers
                 //result = BL.Usuario.Add(usuario);
                 //ViewBag.Message = result.Message;
                 //return View("Modal");
-                 
-                //using (var client = new HttpClient())
-                //{
-                //    client.BaseAddress = new Uri("http://localhost:40840//api/");
 
-                //    //HTTP POST
-                //    var postTask = client.PostAsJsonAsync<ML.SubCategoria>("subcategoria/Add", subcategoria);
-                //    postTask.Wait();
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(_configuration["UrlApi"]);
 
-                //    var result = postTask.Result;
-                //    if (result.IsSuccessStatusCode)
-                //    {
-                //        return RedirectToAction("GetAll");
-                //    }
-                //}
+                    //HTTP POST
+                    var postTask = client.PostAsJsonAsync<ML.Usuario>("Usuario/Add", usuario);
+                    postTask.Wait();
 
-                return View("GetAll");
+                    var result = postTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        ViewBag.Message = "Usuario Agregado correctamente";
+                        return PartialView("Modal");
+                    }
+                    else{
+                        ViewBag.Message = "Error al agregar al usuario";
+                        return PartialView("Modal");
+                    }
+                }
+
+               
             }
                 else
                 {
-                    result = BL.Usuario.Update(usuario);
-                    ViewBag.Message = result.Message;
-                    return View("Modal");
+                //ML.Result result1= new ML.Result();
+                //    result1 = BL.Usuario.Update(usuario);
+                //    ViewBag.Message = result1.Message;
+                //    return View("Modal");
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(_configuration["UrlApi"]);
+
+                    //HTTP POST
+                    var postTask = client.PostAsJsonAsync<ML.Usuario>("Usuario/Update", usuario);
+                    postTask.Wait();
+
+                    var result = postTask.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        ViewBag.Message = "Usuario actualizado correctamente";
+                        return PartialView("Modal");
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Error al actualizar al usuario";
+                        return PartialView("Modal");
+                    }
                 }
+            }
             //}
             //else {
             //    ML.Result resultrol = BL.Rol.GetAllRol();
@@ -202,19 +263,48 @@ namespace PL.Controllers
             }
             else
             {
-                
-                ML.Result result = BL.Usuario.Delete(idUsuario.Value);
 
-                if (result.Correct)
+                //ML.Result result = BL.Usuario.Delete(idUsuario.Value);
+
+                //if (result.Correct)
+                //{
+                //    ViewBag.Message = result.Message;
+                //    return View("Modal");
+                //}
+                //else
+                //{
+                //    ViewBag.Message = result.Message;
+                //    return View("Modal");
+                //}
+                //ML.Result result=new ML.Result();
+                try
                 {
-                    ViewBag.Message = result.Message;
-                    return View("Modal");
+                    using (var client = new HttpClient())
+                    {
+                        string urlApi = _configuration["UrlApi"];
+                        client.BaseAddress = new Uri(urlApi);
+
+                        var responseTask = client.GetAsync("Usuario/Delete/" + idUsuario);
+                        responseTask.Wait();
+                        var result = responseTask.Result;
+                        if (result.IsSuccessStatusCode)
+                        {
+                            ViewBag.Message = "Usuario borrado exitosamente";
+                        }
+                        else {
+                            ViewBag.Message = "Error al eliminar al usuario";
+                        }
+
+                    }
+
+                    
                 }
-                else
+                catch (Exception ex)
                 {
-                    ViewBag.Message = result.Message;
-                    return View("Modal");
+                    ViewBag.Message = ex.Message;
+                    
                 }
+                return PartialView("Modal");
             }
         }
 

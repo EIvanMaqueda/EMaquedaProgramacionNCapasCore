@@ -2,30 +2,32 @@
 
 namespace SL.Controllers
 {
-    public class UsuarioController : Controller
+    public class EmpleadoController : Controller
     {
         [HttpGet]
-        [Route("api/Usuario/GetAll")]
+        [Route("api/Empleado/GetAll")]
         public ActionResult GetAll()
         {
-            ML.Usuario usuario= new ML.Usuario();
-            ML.Result result = BL.Usuario.GetAll(usuario);
+            ML.Empleado empleado = new ML.Empleado();
+            empleado.Empresa = new ML.Empresa();
+            ML.Result result = BL.Empleado.GetAll(empleado);
             if (result.Correct)
             {
                 return Ok(result);
             }
-            else { 
+            else
+            {
                 return NotFound(result);
             }
-            
+
         }
 
         [HttpPost]
-        [Route("api/Usuario/Add")]
-        public ActionResult Add([FromBody]ML.Usuario usuario)
+        [Route("api/Empleado/Add")]
+        public ActionResult Add([FromBody] ML.Empleado empleado)
         {
-           
-            ML.Result result = BL.Usuario.Add(usuario);
+
+            ML.Result result = BL.Empleado.Add(empleado);
             if (result.Correct)
             {
                 return Ok(result);
@@ -39,11 +41,11 @@ namespace SL.Controllers
 
 
         [HttpGet]
-        [Route("api/Usuario/GetByid/{IdUsuario}")]
-        public ActionResult GetById(int IdUsuario)
+        [Route("api/Empleado/GetByid/{IdEmpleado}")]
+        public ActionResult GetById(int IdEmpleado)
         {
             //ML.Usuario usuario = new ML.Usuario();
-            ML.Result result = BL.Usuario.GetById(IdUsuario);
+            ML.Result result = BL.Empleado.GetById(IdEmpleado);
             if (result.Correct)
             {
                 return Ok(result);
@@ -56,11 +58,11 @@ namespace SL.Controllers
         }
 
         [HttpGet]
-        [Route("api/Usuario/Delete/{IdUsuario}")]
-        public ActionResult Delete(int IdUsuario)
+        [Route("api/Empleado/Delete/{IdEmpleado}")]
+        public ActionResult Delete(int IdEmpleado)
         {
             ML.Usuario usuario = new ML.Usuario();
-            ML.Result result = BL.Usuario.Delete(IdUsuario);
+            ML.Result result = BL.Empleado.Delete(IdEmpleado);
             if (result.Correct)
             {
                 return Ok(result);
@@ -73,18 +75,19 @@ namespace SL.Controllers
         }
 
         [HttpPost]
-        [Route("api/Usuario/Update")]
-        public ActionResult Update([FromBody] ML.Usuario usuario) {
-            
-            ML.Result result = BL.Usuario.Update(usuario);
+        [Route("api/Empleado/Update")]
+        public ActionResult Update([FromBody] ML.Empleado empleado)
+        {
+
+            ML.Result result = BL.Empleado.Update(empleado);
             if (result.Correct)
             {
                 return Ok(result);
             }
-            else { 
-              return NotFound(result);
+            else
+            {
+                return NotFound(result);
             }
         }
-
     }
 }
